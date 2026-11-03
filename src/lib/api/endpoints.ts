@@ -1,4 +1,5 @@
 import { DEVICE_LABEL } from '../../config';
+import { shrinkImage } from '../images';
 import type {
   AdminApplicationDetail,
   AdminApplicationRow,
@@ -311,8 +312,11 @@ export const loansApi = {
   eligibility: () => http.get<Eligibility>('/loans/eligibility'),
   quote: (amount: number, months: number, frequency: RepaymentFrequency = 'MONTHLY') =>
     http.get<LoanQuote>('/loans/quote', { amount, months, frequency }),
-  /** Four files and a form in one request. Nothing is credited by this call. */
-  apply: (input: {
+  /**
+   * Five files and a form in one request. Nothing is credited by this call.
+   * Photos are shrunk first: full-size camera files ran the server out of memory.
+   */
+  apply: async (input: {
     amount: number;
     months: number;
     repaymentFrequency: RepaymentFrequency;
@@ -331,9 +335,14 @@ export const loansApi = {
     const { bankStatement, selfie, businessPhotos, statementPassword, ...rest } = input;
     const payload = { ...rest, ...(statementPassword?.trim() ? { statementPassword: statementPassword.trim() } : {}) };
     form.set('form', new Blob([JSON.stringify(payload)], { type: 'application/json' }), 'form.json');
-    form.append('bankStatement', bankStatement, bankStatement.name);
-    form.append('selfie', selfie, selfie.name);
-    for (const photo of businessPhotos) form.append('businessPhotos', photo, photo.name);
+    const [statementFile, selfieFile, photoFiles] = await Promise.all([
+      shrinkImage(bankStatement),
+      shrinkImage(selfie),
+      Promise.all(businessPhotos.map(shrinkImage)),
+    ]);
+    form.append('bankStatement', statementFile, statementFile.name);
+    form.append('selfie', selfieFile, selfieFile.name);
+    for (const photo of photoFiles) form.append('businessPhotos', photo, photo.name);
     return http.upload<LoanApplication>('/loans/applications', form, newIdempotencyKey());
   },
   applications: () => http.get<LoanApplication[]>('/loans/applications'),
