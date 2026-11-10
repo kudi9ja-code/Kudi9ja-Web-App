@@ -17,7 +17,7 @@ import { useAction } from '../../hooks/useAction';
 import { keys } from '../../hooks/queries';
 import { adminApi, groupsApi } from '../../lib/api/endpoints';
 import { asDay, asDayTime, formatNumber, maskLast4, naira, relative } from '../../lib/format';
-import { accountTone, applicationTone, can, depositTone, loanTone, paystackTone, payoutLabel, planTone, supportTone } from '../../lib/labels';
+import { accountTone, applicationTone, can, depositTone, loanTone, paystackTone, payoutLabel, /* planTone, */ supportTone } from '../../lib/labels';
 import { useSession } from '../../state/session';
 import type { AccountStatus, Loan } from '../../types/api';
 import { termPhrase } from '../../lib/finance';
@@ -125,7 +125,9 @@ export default function CustomerDetail() {
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile label="Wallet" value={naira(f.balance)} footnote={f.pendingWithdrawals ? `${naira(f.pendingWithdrawals)} withdrawing` : undefined} />
+        {/* Savings is switched off for now.
         <StatTile label="Saved" value={naira(f.totalSaved)} tone="info" footnote={`${f.activePlans} of ${f.totalPlans} plans active`} />
+        */}
         <StatTile label="Owes" value={naira(f.totalOwed)} tone={f.overdueLoans ? 'danger' : 'neutral'} footnote={`${f.activeLoans} open · ${f.overdueLoans} overdue · ${closedLoans} closed`} />
         <StatTile label="Repaid on loans" value={naira(repaidOnLoans)} tone="success" footnote={`${naira(f.totalDeposited)} paid into the wallet · ${formatNumber(f.transactionCount)} transactions`} />
       </div>
@@ -136,7 +138,7 @@ export default function CustomerDetail() {
         options={[
           { value: 'overview', label: 'Details' },
           { value: 'loans', label: 'Loans' },
-          { value: 'savings', label: 'Savings' },
+          // { value: 'savings', label: 'Savings' }, // switched off for now
           { value: 'money', label: 'Money in & out' },
           { value: 'documents', label: 'Documents' },
           { value: 'support', label: 'Help & complaints' },
@@ -179,7 +181,7 @@ export default function CustomerDetail() {
         </div>
       )}
       {tab === 'loans' && <LoansTab id={id} />}
-      {tab === 'savings' && <SavingsTab id={id} />}
+      {/* {tab === 'savings' && <SavingsTab id={id} />} — savings is switched off for now */}
       {tab === 'money' && <MoneyTab id={id} />}
       {tab === 'documents' && <DocumentsTab id={id} />}
       {tab === 'support' && <SupportTab id={id} />}
@@ -405,6 +407,7 @@ function LoansTab({ id }: { id: string }) {
   );
 }
 
+/* Savings is switched off for now.
 function SavingsTab({ id }: { id: string }) {
   const plans = useCustomerQuery('plans', id, () => adminApi.customerPlans(id));
   if (plans.isLoading) return <Skeleton className="h-32 w-full" />;
@@ -435,6 +438,7 @@ function SavingsTab({ id }: { id: string }) {
     </div>
   );
 }
+*/
 
 function MoneyTab({ id }: { id: string }) {
   const tx = useCustomerQuery('transactions', id, () => adminApi.customerTransactions(id));

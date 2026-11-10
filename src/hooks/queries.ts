@@ -2,13 +2,13 @@ import { useQuery, useQueryClient, type QueryKey } from '@tanstack/react-query';
 import {
   adminApi,
   authApi,
-  circlesApi,
+  // circlesApi, // switched off for now
   loansApi,
   meApi,
   notificationsApi,
   publicApi,
   reviewsApi,
-  savingsApi,
+  // savingsApi, // switched off for now
   walletApi,
 } from '../lib/api/endpoints';
 import type { PaystackStatus, DepositStatus, LegalKind, LoanApplicationStatus, LoanStatus, TxFilter, WithdrawalStatus, AccountStatus, AuditCategory, PublicSettings, RepaymentSource } from '../types/api';
@@ -46,6 +46,7 @@ export const keys = {
   admin: {
     root: ['admin'] as const,
     overview: ['admin', 'overview'] as const,
+    book: ['admin', 'overview', 'book'] as const,
     me: ['admin', 'me'] as const,
     customers: (q: string, status?: AccountStatus) => ['admin', 'customers', q, status ?? ''] as const,
     customer: (id: string) => ['admin', 'customer', id] as const,
@@ -91,10 +92,11 @@ export const useClaims = () => useQuery({ queryKey: keys.claims, queryFn: () => 
 export const useMyWithdrawals = () =>
   useQuery({ queryKey: keys.withdrawals, queryFn: () => walletApi.withdrawals(0, 50), enabled: useUnlocked() });
 
-export const usePlans = () => useQuery({ queryKey: keys.plans, queryFn: savingsApi.plans, enabled: useUnlocked() });
-
-export const usePlan = (id: string) =>
-  useQuery({ queryKey: keys.plan(id), queryFn: () => savingsApi.plan(id), enabled: useUnlocked() && !!id });
+// Savings is switched off for now.
+// export const usePlans = () => useQuery({ queryKey: keys.plans, queryFn: savingsApi.plans, enabled: useUnlocked() });
+//
+// export const usePlan = (id: string) =>
+//   useQuery({ queryKey: keys.plan(id), queryFn: () => savingsApi.plan(id), enabled: useUnlocked() && !!id });
 
 export const useLoans = () => useQuery({ queryKey: keys.loans, queryFn: loansApi.loans, enabled: useUnlocked() });
 
@@ -119,10 +121,11 @@ export function useBorrowerSettings(): { settings: PublicSettings; groupPricing:
 export const useApplications = () =>
   useQuery({ queryKey: keys.applications, queryFn: loansApi.applications, enabled: useUnlocked() });
 
-export const useCircles = () => useQuery({ queryKey: keys.circles, queryFn: circlesApi.circles, enabled: useUnlocked() });
-
-export const useCircle = (id: string) =>
-  useQuery({ queryKey: keys.circle(id), queryFn: () => circlesApi.circle(id), enabled: useUnlocked() && !!id });
+// Ajo circles are switched off for now.
+// export const useCircles = () => useQuery({ queryKey: keys.circles, queryFn: circlesApi.circles, enabled: useUnlocked() });
+//
+// export const useCircle = (id: string) =>
+//   useQuery({ queryKey: keys.circle(id), queryFn: () => circlesApi.circle(id), enabled: useUnlocked() && !!id });
 
 export const useNotifications = () =>
   useQuery({ queryKey: keys.notifications, queryFn: () => notificationsApi.list(0, 100), enabled: useUnlocked() });
@@ -179,6 +182,9 @@ const useAdminEnabled = () => {
 
 export const useOverview = () =>
   useQuery({ queryKey: keys.admin.overview, queryFn: adminApi.overview, enabled: useAdminEnabled(), refetchInterval: 60_000 });
+
+export const useAdminBook = () =>
+  useQuery({ queryKey: keys.admin.book, queryFn: adminApi.book, enabled: useAdminEnabled(), refetchInterval: 60_000 });
 
 export const useAdminMe = () => useQuery({ queryKey: keys.admin.me, queryFn: adminApi.me, enabled: useAdminEnabled() });
 
@@ -267,9 +273,9 @@ export function useRefresh() {
   const run = (...ks: QueryKey[]) => Promise.all(ks.map((k) => qc.invalidateQueries({ queryKey: k })));
   return {
     money: () => run(keys.dashboard, keys.wallet, ['transactions'], keys.notifications, keys.paystack, keys.withdrawals, keys.loans),
-    savings: () => run(keys.plans, keys.dashboard, keys.wallet, ['transactions'], keys.notifications),
+    // savings: () => run(keys.plans, keys.dashboard, keys.wallet, ['transactions'], keys.notifications),
     loans: () => run(keys.loans, keys.applications, keys.dashboard, keys.wallet, ['transactions'], keys.notifications),
-    circles: () => run(keys.circles, keys.dashboard, keys.wallet, ['transactions'], keys.notifications),
+    // circles: () => run(keys.circles, keys.dashboard, keys.wallet, ['transactions'], keys.notifications),
     claims: () => run(keys.claims, keys.dashboard),
     admin: () => run(keys.admin.root),
     all: () => qc.invalidateQueries(),

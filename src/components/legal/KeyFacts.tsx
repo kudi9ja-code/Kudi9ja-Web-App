@@ -1,4 +1,4 @@
-import { Ban, CalendarClock, HandCoins, Hourglass, Landmark, PhoneOff, Receipt, Scale, ShieldAlert, UserCheck } from 'lucide-react';
+import { Ban, CalendarClock, HandCoins, Hourglass, Landmark, PhoneOff, Receipt, Scale, /* ShieldAlert, */ UserCheck } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { feeRateLabel, loanPreview, loanRateFor, processingFee } from '../../lib/finance';
 import { months, naira, nairaFlat, ratePct } from '../../lib/format';
@@ -107,12 +107,13 @@ export function LendingKeyFacts() {
 }
 
 export function AccountKeyFacts() {
-  const s = useSettings();
+  // const s = useSettings(); // only the savings facts used it; savings is switched off for now
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       <Fact icon={<Landmark />} title="Kudi9ja is not a bank">
         Your wallet is not a bank account and is not insured by the NDIC. Money reaches it only after our team confirms your transfer.
       </Fact>
+      {/* Savings is switched off for now.
       <Fact icon={<ShieldAlert />} title="Fixed Savings cannot be broken">
         The {ratePct(s.savings.annualRate * 100)} return is paid the day you start, which is why the principal stays locked until maturity — for any
         reason.
@@ -120,6 +121,7 @@ export function AccountKeyFacts() {
       <Fact icon={<CalendarClock />} title="Target Savings can be broken">
         Every naira you saved comes back in full, but the whole completion bonus is forfeited.
       </Fact>
+      */}
       <Fact icon={<UserCheck />} title="Payouts only to you">
         Withdrawals go only to a bank account in your own name, and each one is reviewed by our team first.
       </Fact>

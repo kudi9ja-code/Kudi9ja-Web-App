@@ -123,7 +123,7 @@ export default function Controls() {
   const save = async () => {
     const ok = await dialogs.confirm({
       title: `Save ${changed.length} change${changed.length > 1 ? 's' : ''}?`,
-      message: 'New figures apply to new plans and loans from now. Running plans and loans keep the terms they started with.',
+      message: 'New figures apply to new loans from now. Running loans keep the terms they started with.',
       confirmLabel: 'Save',
     });
     if (!ok) return;
@@ -221,13 +221,16 @@ export default function Controls() {
 
       <Group title="Switches">
         <div className="grid gap-3 md:grid-cols-2">
+          {/* Savings and Ajo circles are switched off for now.
           {flag('savingsEnabled', 'Savings', 'New savings plans can be opened')}
+          */}
           {flag('lendingEnabled', 'Lending', 'New loan applications are taken')}
-          {flag('thriftEnabled', 'Ajo circles', 'New circles can be started')}
+          {/* {flag('thriftEnabled', 'Ajo circles', 'New circles can be started')} */}
           {flag('maintenanceMode', 'Maintenance mode', 'Pauses money movement; customers see a notice')}
         </div>
       </Group>
 
+      {/* Savings is switched off for now.
       <Group title="Savings">
         <Grid>
           {num('savingsAnnualRate', 'Fixed savings rate, a year')}
@@ -244,6 +247,7 @@ export default function Controls() {
           {num('minTargetMonths', 'Shortest target plan (months)')}
         </Grid>
       </Group>
+      */}
 
       <Group title="Lending">
         <p className="mb-4 text-[13px] text-ink-3">For everyone who is not in a loan group.</p>
@@ -264,13 +268,15 @@ export default function Controls() {
         {lending('group')}
       </Group>
 
-      <Group title="Wallet and circles">
+      <Group title="Wallet">
         <Grid>
           {num('minDepositAmount', 'Smallest pay-in (₦)')}
           {num('minWithdrawalAmount', 'Smallest withdrawal (₦)')}
+          {/* Ajo circles are switched off for now.
           {num('minCircleContribution', 'Smallest circle contribution (₦)')}
           {num('minCircleMembers', 'Fewest circle members')}
           {num('maxCircleMembers', 'Most circle members')}
+          */}
         </Grid>
       </Group>
 

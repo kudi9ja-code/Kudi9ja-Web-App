@@ -1,4 +1,5 @@
-import { AlarmClock, ArrowDownLeft, ArrowUpRight, ClipboardList, CreditCard, HandCoins, Landmark, PiggyBank, TrendingUp, Users, Wallet } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { AlarmClock, ArrowDownLeft, ArrowUpRight, ClipboardList, CreditCard, HandCoins, Landmark, /* PiggyBank, */ TrendingUp, Users, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader';
 import { IconBadge, StatTile } from '../../components/ui/Bits';
@@ -22,7 +23,7 @@ export default function Overview() {
     { to: '/admin/payments', icon: <ArrowUpRight />, label: 'Withdrawals to approve', count: o.queues.pendingWithdrawals, value: o.queues.pendingWithdrawalValue, late: o.queues.withdrawalsBreachingSla },
     { to: '/admin/lending', icon: <ClipboardList />, label: 'Loan applications', count: applications.data?.totalItems ?? 0 },
     {
-      to: '/admin/lending',
+      to: '/admin/book/outstanding',
       icon: <Landmark />,
       label: 'Still owed on running loans',
       count: o.book.activeLoans + o.book.overdueLoans,
@@ -62,24 +63,42 @@ export default function Overview() {
       </div>
 
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-        <StatTile label="Customer money held" value={naira(o.customerFundsHeld)} icon={<Wallet />} footnote="Wallet balances" />
+        <TileLink to="/admin/book/held">
+          <StatTile className={tileClass} label="Customer money held" value={naira(o.customerFundsHeld)} icon={<Wallet />} footnote="Wallet balances" />
+        </TileLink>
+        {/* Savings is switched off for now.
         <StatTile label="Saved" value={naira(o.book.totalSaved)} icon={<PiggyBank />} tone="info" footnote={`${formatNumber(o.book.activePlans)} active plans`} />
-        <StatTile label="Lent" value={naira(o.book.totalLent)} icon={<CreditCard />} footnote={`${formatNumber(o.book.activeLoans)} active · ${formatNumber(o.book.repaidLoans)} repaid`} />
-        <Link to="/admin/repayments" className="block rounded-2xl transition hover:-translate-y-px">
+        */}
+        <TileLink to="/admin/book/lent">
+          <StatTile className={tileClass} label="Lent" value={naira(o.book.totalLent)} icon={<CreditCard />} footnote={`${formatNumber(o.book.activeLoans)} active · ${formatNumber(o.book.repaidLoans)} repaid`} />
+        </TileLink>
+        <TileLink to="/admin/repayments">
           <StatTile
-            className="h-full transition hover:border-gold/35"
+            className={tileClass}
             label="Repaid by customers"
             value={naira(o.book.totalRepaid)}
             icon={<HandCoins />}
             tone="success"
             footnote={`${formatNumber(o.book.repayments)} repayments · ${naira(o.book.repaidThisMonth)} this month`}
           />
-        </Link>
-        <StatTile label="Overdue" value={naira(o.book.totalOverdue)} icon={<AlarmClock />} tone={o.book.totalOverdue > 0 ? 'danger' : 'neutral'} footnote={`${formatNumber(o.book.loansBehind ?? o.book.overdueLoans)} loans with missed payments`} />
-        <StatTile label="Interest charged" value={naira(o.book.totalInterestCharged)} icon={<TrendingUp />} tone="success" />
-        <StatTile label="Fees charged" value={naira(o.book.totalFeesCharged)} icon={<TrendingUp />} tone="success" />
+        </TileLink>
+        <TileLink to="/admin/book/overdue">
+          <StatTile className={tileClass} label="Overdue" value={naira(o.book.totalOverdue)} icon={<AlarmClock />} tone={o.book.totalOverdue > 0 ? 'danger' : 'neutral'} footnote={`${formatNumber(o.book.loansBehind ?? o.book.overdueLoans)} loans with missed payments`} />
+        </TileLink>
+        <TileLink to="/admin/book/interest">
+          <StatTile className={tileClass} label="Interest charged" value={naira(o.book.totalInterestCharged)} icon={<TrendingUp />} tone="success" />
+        </TileLink>
+        <TileLink to="/admin/book/fees">
+          <StatTile className={tileClass} label="Fees charged" value={naira(o.book.totalFeesCharged)} icon={<TrendingUp />} tone="success" />
+        </TileLink>
+        {/* Interest paid out is what savings plans earned; savings is switched off for now.
         <StatTile label="Interest paid out" value={naira(o.book.totalInterestPaid)} icon={<PiggyBank />} />
-        {!customersOnTop && <StatTile label="Customers" value={formatNumber(o.people.customers)} icon={<Users />} footnote={customersNote} />}
+        */}
+        {!customersOnTop && (
+          <TileLink to="/admin/customers">
+            <StatTile className={tileClass} label="Customers" value={formatNumber(o.people.customers)} icon={<Users />} footnote={customersNote} />
+          </TileLink>
+        )}
       </div>
 
       <Card padded={false}>
@@ -107,5 +126,16 @@ export default function Overview() {
         </ul>
       </Card>
     </div>
+  );
+}
+
+const tileClass = 'h-full transition hover:border-gold/35';
+
+/** Every figure opens the list it was added up from. */
+function TileLink({ to, children }: { to: string; children: ReactNode }) {
+  return (
+    <Link to={to} className="block rounded-2xl transition hover:-translate-y-px">
+      {children}
+    </Link>
   );
 }

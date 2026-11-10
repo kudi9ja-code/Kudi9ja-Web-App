@@ -32,7 +32,7 @@ export interface SignedRecord {
 }
 
 const DOCS: { kind: LegalKind; icon: typeof Gavel; why: string }[] = [
-  { kind: 'terms', icon: Gavel, why: 'Your account, your wallet, paying in and out, savings and Ajo circles.' },
+  { kind: 'terms', icon: Gavel, why: 'Your account, your wallet, and paying in and out.' },
   { kind: 'privacy', icon: ShieldCheck, why: 'What we collect, why, who sees it, and the rights the NDPA 2023 gives you.' },
   { kind: 'lending', icon: Handshake, why: 'What a loan costs, how you repay it, and the limits we accept when collecting.' },
 ];

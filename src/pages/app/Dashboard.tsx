@@ -2,14 +2,14 @@ import {
   ArrowDownLeft,
   ArrowUpRight,
   CalendarClock,
-  Calculator,
+  // Calculator,
   CreditCard,
   Eye,
   EyeOff,
-  PiggyBank,
+  // PiggyBank, // savings and Ajo circles are switched off for now
   ReceiptText,
   TrendingUp,
-  Users,
+  // Users,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,7 @@ import { Button } from '../../components/ui/Button';
 import { Card, SectionHeader } from '../../components/ui/Card';
 import { Skeleton } from '../../components/ui/Spinner';
 import { useDashboard, useTransactions } from '../../hooks/queries';
-import { asDay, firstName, greeting, naira, rateOf } from '../../lib/format';
+import { asDay, firstName, greeting, naira /* , rateOf */ } from '../../lib/format';
 import { useProfile, useSession } from '../../state/session';
 import { useSettings } from '../../state/settings';
 
@@ -73,9 +73,11 @@ export default function Dashboard() {
           <Button to="/app/wallet/withdraw" variant="ghost" icon={<ArrowUpRight className="h-4 w-4" />}>
             Withdraw
           </Button>
+          {/* Savings is switched off for now.
           <Button to="/app/savings/new" variant="ghost" icon={<PiggyBank className="h-4 w-4" />}>
             Save
           </Button>
+          */}
           {settings.switches.lendingEnabled && (
             <Button to="/app/loans" variant="ghost" icon={<CreditCard className="h-4 w-4" />}>
               Borrow
@@ -108,6 +110,7 @@ export default function Dashboard() {
       )}
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {/* Savings is switched off for now.
         <StatTile label="Saved" value={money(d?.totalSaved)} icon={<PiggyBank />} footnote={`${d?.activePlans ?? 0} active plans`} />
         <StatTile
           label="Interest earned"
@@ -116,8 +119,11 @@ export default function Dashboard() {
           tone="success"
           footnote="All time"
         />
+        */}
         <StatTile label="You owe" value={money(d?.totalOwed)} icon={<CreditCard />} tone={d?.totalOwed ? 'danger' : 'neutral'} footnote={`${d?.activeLoans ?? 0} open loans`} />
+        {/* Ajo circles are switched off for now.
         <StatTile label="In Ajo circles" value={money(d?.thriftCommitted)} icon={<Users />} tone="info" footnote={`${d?.activeCircles ?? 0} circles`} />
+        */}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
@@ -150,12 +156,14 @@ export default function Dashboard() {
         <section>
           <SectionHeader title="Plan ahead" />
           <div className="space-y-3">
+            {/* Savings is switched off for now.
             <ShortcutCard
               to="/app/savings/calculator"
               icon={<Calculator />}
               title="Savings calculator"
               body={`See what a fixed plan earns at ${rateOf(settings.savings.annualRate)} a year.`}
             />
+            */}
             {settings.switches.lendingEnabled && (
               <ShortcutCard to="/app/loans/calculator" icon={<CreditCard />} title="Loan calculator" body="What you would repay, before you apply." />
             )}

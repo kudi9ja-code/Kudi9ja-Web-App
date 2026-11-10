@@ -349,7 +349,7 @@ export function PayoutStep({ draft, update, next }: StepProps) {
   return (
     <StepFrame
       headline="Where should we pay you?"
-      subhead="Kudi9ja does not give you a new account number. Your savings returns, your loans and anything you withdraw go straight to a bank account you already have."
+      subhead="Kudi9ja does not give you a new account number. Your loans and anything you withdraw go straight to a bank account you already have."
       onSubmit={submit}
       action={
         <Button type="submit" size="lg" block loading={busy} disabled={!ready}>
@@ -486,7 +486,7 @@ export function CodeStep({ draft, next, mode }: StepProps & { mode: 'passcode' |
     ? 'Enter it once more to be sure.'
     : mode === 'passcode'
       ? `You will type this to open Kudi9ja after signing in or 10 minutes away. ${length} digits, no repeats, no straight runs.`
-      : `A separate ${length}-digit PIN that authorises every saving, repayment and withdrawal.`;
+      : `A separate ${length}-digit PIN that authorises every repayment and withdrawal.`;
 
   return (
     <div className="mx-auto max-w-md text-center">

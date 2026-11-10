@@ -53,7 +53,7 @@ export default function Wallet() {
           )}
         </Card>
         <StatTile label="Paid in, all time" value={money(w?.totalDeposited)} icon={<Banknote />} tone="success" />
-        <StatTile label="Net worth" value={money(w?.netWorth)} icon={<Landmark />} footnote="Wallet + savings − loans" />
+        <StatTile label="Net worth" value={money(w?.netWorth)} icon={<Landmark />} footnote="Wallet − loans" />
       </div>
       {w?.disclosure && <p className="text-[12.5px] text-ink-3">{w.disclosure}</p>}
 

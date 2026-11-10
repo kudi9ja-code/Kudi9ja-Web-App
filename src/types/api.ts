@@ -819,6 +819,61 @@ export interface Overview {
   generatedAt: ISODate;
 }
 
+/** One loan behind the Overview figures: on an account, or entered by hand and not yet claimed. */
+export interface BookLoanRow {
+  source: 'ACCOUNT' | 'OFFLINE';
+  id: string;
+  customerId?: string;
+  customerName: string;
+  customerRef: string;
+  phone?: string;
+  officers: string[];
+  principal: Naira;
+  flatRate: number;
+  interest: Naira;
+  managementFee: Naira;
+  /** The flat transaction fee some older loans had. */
+  transactionFee: Naira;
+  repaymentFees: Naira;
+  fees: Naira;
+  totalRepayable: Naira;
+  amountRepaid: Naira;
+  outstanding: Naira;
+  /** Owed on instalments whose day has passed. */
+  pastDue: Naira;
+  missedInstalments: number;
+  oldestMissedDue?: ISODate;
+  daysBehind: number;
+  installmentCount: number;
+  installmentsPaid: number;
+  nextDue?: ISODate;
+  nextDueAmount?: Naira;
+  open: boolean;
+  status: LoanStatus;
+  statusLabel: string;
+  repaymentFrequency: RepaymentFrequency;
+  tenureMonths: number;
+  purpose: string;
+  disbursedAt?: ISODate;
+  dueDate?: ISODate;
+}
+
+export interface WalletHolderRow {
+  customerId: string;
+  customerName: string;
+  customerRef: string;
+  phone?: string;
+  accountStatus?: AccountStatus;
+  balance: Naira;
+  updatedAt?: ISODate;
+}
+
+export interface BookDetail {
+  loans: BookLoanRow[];
+  wallets: WalletHolderRow[];
+  generatedAt: ISODate;
+}
+
 export interface CustomerRow {
   id: string;
   customerRef: string;

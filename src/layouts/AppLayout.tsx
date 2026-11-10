@@ -13,14 +13,14 @@ import {
   X,
   MessagesSquare,
   Moon,
-  PiggyBank,
+  // PiggyBank, // savings is switched off for now
   ReceiptText,
   Shield,
   ShieldCheck,
   Star,
   Sun,
   User,
-  Users,
+  // Users, // Ajo circles are switched off for now
   Wrench,
 } from 'lucide-react';
 import { BrandLogo } from '../components/Brand';
@@ -38,17 +38,18 @@ import { useTheme } from '../state/theme';
 
 const NAV = [
   { to: '/app', label: 'Home', icon: Home, end: true },
-  { to: '/app/savings', label: 'Save', icon: PiggyBank },
+  // Savings and Ajo circles are switched off for now.
+  // { to: '/app/savings', label: 'Save', icon: PiggyBank },
   { to: '/app/loans', label: 'Borrow', icon: CreditCard },
   { to: '/app/wallet', label: 'Wallet', icon: ReceiptText },
-  { to: '/app/circles', label: 'Ajo circles', icon: Users },
+  // { to: '/app/circles', label: 'Ajo circles', icon: Users },
   { to: '/app/insights', label: 'Insights', icon: LineChart },
   { to: '/app/reviews', label: 'Reviews', icon: Star },
 ];
 
 const MOBILE_NAV = [
   { to: '/app', label: 'Home', icon: Home, end: true },
-  { to: '/app/savings', label: 'Save', icon: PiggyBank },
+  // { to: '/app/savings', label: 'Save', icon: PiggyBank },
   { to: '/app/loans', label: 'Borrow', icon: CreditCard },
   { to: '/app/wallet', label: 'Wallet', icon: ReceiptText },
   { to: '/app/profile', label: 'Profile', icon: User },
@@ -109,7 +110,7 @@ export function AppLayout() {
           <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-3 rounded-2xl border border-gold/30 bg-gold/[0.08] px-4 py-3 text-[13px] text-ink-2">
               <Wrench className="h-4 w-4 shrink-0 text-gold" />
-              Kudi9ja is under maintenance. You can look around, but new plans and loans are paused for now.
+              Kudi9ja is under maintenance. You can look around, but new loans are paused for now.
             </div>
           </div>
         )}
@@ -280,7 +281,7 @@ function AccountMenu() {
     setOpen(false);
     const ok = await dialogs.confirm({
       title: 'Sign out?',
-      message: 'Your savings and history stay safe. You will need your email and password to sign back in.',
+      message: 'Your money and history stay safe. You will need your email and password to sign back in.',
       confirmLabel: 'Sign out',
       danger: true,
     });

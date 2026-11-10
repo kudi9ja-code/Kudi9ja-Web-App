@@ -95,7 +95,7 @@ export default function Notifications() {
             })}
           </ul>
         ) : (
-          <EmptyState icon={<Bell />} title="No notifications" message="Payments, savings, loans and replies from the team show up here." />
+          <EmptyState icon={<Bell />} title="No notifications" message="Payments, loans and replies from the team show up here." />
         )}
       </Card>
 

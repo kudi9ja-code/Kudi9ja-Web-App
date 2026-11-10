@@ -9,9 +9,9 @@ import type {
   AppNotification,
   AuditCategory,
   AuditRow,
-  AutoFrequency,
+  // AutoFrequency, // savings and Ajo circles are switched off for now
   Bank,
-  Circle,
+  // Circle, // savings and Ajo circles are switched off for now
   Claim,
   ClosureEligibility,
   ClosureResponse,
@@ -50,6 +50,7 @@ import type {
   OtpResponse,
   OutstandingAgreement,
   Overview,
+  BookDetail,
   PageResponse,
   PaymentInstruction,
   PaystackCheckout,
@@ -70,16 +71,16 @@ import type {
   LoanGroup,
   LoanGroupDetail,
   GroupLabel,
-  Plan,
+  // Plan, // savings and Ajo circles are switched off for now
   PlatformSettings,
   Profile,
   PublicSettings,
-  ReleaseResponse,
+  // ReleaseResponse, // savings and Ajo circles are switched off for now
   RepaymentResponse,
   Review,
   ReviewSummary,
   RoleOption,
-  RoundResponse,
+  // RoundResponse, // savings and Ajo circles are switched off for now
   SessionResponse,
   SessionSummary,
   TeamMember,
@@ -280,29 +281,30 @@ export const walletApi = {
     http.get<PageResponse<PaystackPayment>>('/payins/paystack', { page, size }),
 };
 
+// Savings and Ajo circles are switched off for now.
 // ── Savings ─────────────────────────────────────────────────────────────────
 
-export const savingsApi = {
-  plans: () => http.get<Plan[]>('/savings/plans'),
-  plan: (id: string) => http.get<Plan>(`/savings/plans/${id}`),
-  createFixed: (input: { title: string; principal: number; days: number; emoji: string; pin: string }) =>
-    http.post<Plan>('/savings/plans/fixed', input, { idempotencyKey: newIdempotencyKey() }),
-  createTarget: (input: {
-    title: string;
-    goal: number;
-    frequency: AutoFrequency;
-    months: number;
-    emoji: string;
-    pin: string;
-  }) => http.post<Plan>('/savings/plans/target', input, { idempotencyKey: newIdempotencyKey() }),
-  topUp: (id: string, amount: number, pin: string) =>
-    http.post<Plan>(`/savings/plans/${id}/topup`, { amount, pin }, { idempotencyKey: newIdempotencyKey() }),
-  withdraw: (id: string, pin: string) =>
-    http.post<ReleaseResponse>(`/savings/plans/${id}/withdraw`, { pin }, { idempotencyKey: newIdempotencyKey() }),
-  breakPlan: (id: string, pin: string) =>
-    http.post<ReleaseResponse>(`/savings/plans/${id}/break`, { pin }, { idempotencyKey: newIdempotencyKey() }),
-  autoSave: (id: string, enabled: boolean) => http.patch<Plan>(`/savings/plans/${id}/autosave`, { enabled }),
-};
+// export const savingsApi = {
+//   plans: () => http.get<Plan[]>('/savings/plans'),
+//   plan: (id: string) => http.get<Plan>(`/savings/plans/${id}`),
+//   createFixed: (input: { title: string; principal: number; days: number; emoji: string; pin: string }) =>
+//     http.post<Plan>('/savings/plans/fixed', input, { idempotencyKey: newIdempotencyKey() }),
+//   createTarget: (input: {
+//     title: string;
+//     goal: number;
+//     frequency: AutoFrequency;
+//     months: number;
+//     emoji: string;
+//     pin: string;
+//   }) => http.post<Plan>('/savings/plans/target', input, { idempotencyKey: newIdempotencyKey() }),
+//   topUp: (id: string, amount: number, pin: string) =>
+//     http.post<Plan>(`/savings/plans/${id}/topup`, { amount, pin }, { idempotencyKey: newIdempotencyKey() }),
+//   withdraw: (id: string, pin: string) =>
+//     http.post<ReleaseResponse>(`/savings/plans/${id}/withdraw`, { pin }, { idempotencyKey: newIdempotencyKey() }),
+//   breakPlan: (id: string, pin: string) =>
+//     http.post<ReleaseResponse>(`/savings/plans/${id}/break`, { pin }, { idempotencyKey: newIdempotencyKey() }),
+//   autoSave: (id: string, enabled: boolean) => http.patch<Plan>(`/savings/plans/${id}/autosave`, { enabled }),
+// };
 
 // ── Lending ─────────────────────────────────────────────────────────────────
 
@@ -355,26 +357,27 @@ export const loansApi = {
     http.post<RepaymentResponse>(`/loans/${id}/settle`, { pin }, { idempotencyKey: newIdempotencyKey() }),
 };
 
+// Switched off for now.
 // ── Ajo circles ─────────────────────────────────────────────────────────────
 
-export const circlesApi = {
-  circles: () => http.get<Circle[]>('/circles'),
-  circle: (id: string) => http.get<Circle>(`/circles/${id}`),
-  create: (input: {
-    name: string;
-    contribution: number;
-    frequency: AutoFrequency;
-    memberRefs: string[];
-    emoji: string;
-    pin: string;
-  }) => http.post<Circle>('/circles', input, { idempotencyKey: newIdempotencyKey() }),
-  join: (inviteCode: string) => http.post<Circle>('/circles/join', { inviteCode }),
-  contribute: (id: string, pin: string) =>
-    http.post<Circle>(`/circles/${id}/contribute`, { pin }, { idempotencyKey: newIdempotencyKey() }),
-  collect: (id: string, pin: string) =>
-    http.post<RoundResponse>(`/circles/${id}/payout`, { pin }, { idempotencyKey: newIdempotencyKey() }),
-  leave: (id: string) => http.post<void>(`/circles/${id}/leave`),
-};
+// export const circlesApi = {
+//   circles: () => http.get<Circle[]>('/circles'),
+//   circle: (id: string) => http.get<Circle>(`/circles/${id}`),
+//   create: (input: {
+//     name: string;
+//     contribution: number;
+//     frequency: AutoFrequency;
+//     memberRefs: string[];
+//     emoji: string;
+//     pin: string;
+//   }) => http.post<Circle>('/circles', input, { idempotencyKey: newIdempotencyKey() }),
+//   join: (inviteCode: string) => http.post<Circle>('/circles/join', { inviteCode }),
+//   contribute: (id: string, pin: string) =>
+//     http.post<Circle>(`/circles/${id}/contribute`, { pin }, { idempotencyKey: newIdempotencyKey() }),
+//   collect: (id: string, pin: string) =>
+//     http.post<RoundResponse>(`/circles/${id}/payout`, { pin }, { idempotencyKey: newIdempotencyKey() }),
+//   leave: (id: string) => http.post<void>(`/circles/${id}/leave`),
+// };
 
 // ── Notifications and reviews ───────────────────────────────────────────────
 
@@ -479,6 +482,8 @@ export const groupsApi = {
 
 export const adminApi = {
   overview: () => http.get<Overview>('/admin/overview'),
+  /** Every loan and wallet the Overview figures are added up from. */
+  book: () => http.get<BookDetail>('/admin/overview/book'),
   /** A report for Excel or PDF. Owners and administrators only; logged. */
   exportReport: (name: ExportReportName, from?: string, to?: string) =>
     http.get<ExportReport>(`/admin/exports/${name}`, { from, to }),
@@ -497,7 +502,8 @@ export const adminApi = {
   customerPayIns: (id: string) => http.get<PageResponse<AdminClaim>>(`/admin/customers/${id}/payins`, { size: 50 }),
   customerWithdrawals: (id: string) =>
     http.get<PageResponse<AdminWithdrawal>>(`/admin/customers/${id}/withdrawals`, { size: 50 }),
-  customerPlans: (id: string) => http.get<Plan[]>(`/admin/customers/${id}/plans`),
+  // Savings is switched off for now.
+  // customerPlans: (id: string) => http.get<Plan[]>(`/admin/customers/${id}/plans`),
   customerLoans: (id: string) => http.get<Loan[]>(`/admin/customers/${id}/loans`),
   /** The full BVN and NIN; the server logs every call as a data access. */
   customerIdentityNumbers: (id: string) => http.get<{ bvn?: string; nin?: string }>(`/admin/customers/${id}/identity-numbers`),

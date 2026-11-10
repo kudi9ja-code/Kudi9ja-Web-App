@@ -1,11 +1,11 @@
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, FileText, Fingerprint, Landmark, Lock, Menu, PiggyBank, ShieldCheck, Users, X, Zap } from 'lucide-react';
+import { ArrowRight, CheckCircle2, FileText, Fingerprint, Landmark, Lock, Menu, /* PiggyBank, */ ShieldCheck, /* Users, */ X, Zap } from 'lucide-react';
 import { BrandLogo, BrandMark } from '../../components/Brand';
 import { PromiseHeading, PromiseList } from '../../components/Promises';
 import { usePageTitle } from '../../components/PageHeader';
 import { Button } from '../../components/ui/Button';
-import { nairaFlat, nairaShort, ratePct } from '../../lib/format';
+import { nairaFlat, nairaShort /* , ratePct */ } from '../../lib/format';
 import { useSettings } from '../../state/settings';
 
 /** The app's three onboarding slides, as a landing page. */
@@ -13,7 +13,7 @@ export default function Welcome() {
   usePageTitle('');
   const s = useSettings();
   const [menu, setMenu] = useState(false);
-  const rate = ratePct(s.savings.annualRate * 100);
+  // const rate = ratePct(s.savings.annualRate * 100); // savings is switched off for now
 
   return (
     <div className="min-h-screen bg-canvas">
@@ -69,7 +69,7 @@ export default function Welcome() {
       <section className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 pt-8 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pt-14">
         <div className="animate-rise">
           <ul className="grid w-fit grid-cols-2 gap-x-4 gap-y-1.5 rounded-2xl border border-gold/30 bg-gold/10 px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.1em] text-gold sm:flex sm:rounded-full sm:py-1.5 sm:text-[12px] sm:tracking-[0.14em]">
-            {['Employee loans', 'Personal loans', 'Business loans', 'Savings'].map((label) => (
+            {['Employee loans', 'Personal loans', 'Business loans' /* , 'Savings' */].map((label) => (
               <li key={label} className="flex items-center gap-2 whitespace-nowrap">
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold" /> {label}
               </li>
@@ -126,7 +126,8 @@ export default function Welcome() {
 
       {/* Three products */}
       <section className="relative mx-auto max-w-6xl px-5 pb-20 sm:px-8">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Was three products in a grid (sm:grid-cols-2 lg:grid-cols-3); Savings and Ajo circles are switched off for now. */}
+        <div className="mx-auto grid max-w-xl gap-5">
           <Product
             icon={<Zap />}
             eyebrow="Borrow"
@@ -139,6 +140,7 @@ export default function Welcome() {
               'Repay weekly or monthly',
             ]}
           />
+          {/* Savings and Ajo circles are switched off for now.
           <Product
             icon={<PiggyBank />}
             eyebrow="Save"
@@ -156,6 +158,7 @@ export default function Welcome() {
             statLabel="members per circle"
             points={['Everyone pays in each cycle', 'One member collects the pot each round', 'Kudi9ja keeps the record and the reminders']}
           />
+          */}
         </div>
       </section>
 
@@ -181,7 +184,7 @@ export default function Welcome() {
               {[
                 'Open your account in a few minutes — BVN, NIN and a payout account in your own name.',
                 'Add money by card, bank transfer or USSD through Paystack — credited the moment it is confirmed.',
-                'Lock savings, borrow, or start an Ajo circle — every move confirmed with your PIN.',
+                'Apply for a loan and repay it from your wallet — every move confirmed with your PIN.',
                 'Withdraw to your own bank account. Once approved, Paystack sends it straight to your bank.',
               ].map((t, i) => (
                 <li key={t} className="flex gap-4">

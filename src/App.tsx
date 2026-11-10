@@ -17,15 +17,16 @@ const NotFound = lazy(() => import('./pages/public/NotFound'));
 
 // Customer
 const Dashboard = lazy(() => import('./pages/app/Dashboard'));
-const Savings = lazy(() => import('./pages/app/savings/Savings'));
-const NewPlan = lazy(() => import('./pages/app/savings/NewPlan'));
-const FixedPlan = lazy(() => import('./pages/app/savings/FixedPlan'));
-const TargetPlan = lazy(() => import('./pages/app/savings/TargetPlan'));
-const PlanDetail = lazy(() => import('./pages/app/savings/PlanDetail'));
-const SavingsCalculator = lazy(() => import('./pages/app/savings/SavingsCalculator'));
-const Circles = lazy(() => import('./pages/app/circles/Circles'));
-const NewCircle = lazy(() => import('./pages/app/circles/NewCircle'));
-const CircleDetail = lazy(() => import('./pages/app/circles/CircleDetail'));
+// Savings and Ajo circles are switched off for now.
+// const Savings = lazy(() => import('./pages/app/savings/Savings'));
+// const NewPlan = lazy(() => import('./pages/app/savings/NewPlan'));
+// const FixedPlan = lazy(() => import('./pages/app/savings/FixedPlan'));
+// const TargetPlan = lazy(() => import('./pages/app/savings/TargetPlan'));
+// const PlanDetail = lazy(() => import('./pages/app/savings/PlanDetail'));
+// const SavingsCalculator = lazy(() => import('./pages/app/savings/SavingsCalculator'));
+// const Circles = lazy(() => import('./pages/app/circles/Circles'));
+// const NewCircle = lazy(() => import('./pages/app/circles/NewCircle'));
+// const CircleDetail = lazy(() => import('./pages/app/circles/CircleDetail'));
 const Loans = lazy(() => import('./pages/app/loans/Loans'));
 const LoanCalculator = lazy(() => import('./pages/app/loans/LoanCalculator'));
 const LoanApply = lazy(() => import('./pages/app/loans/LoanApply'));
@@ -58,6 +59,7 @@ const AdminTeam = lazy(() => import('./pages/admin/Team'));
 const AdminAudit = lazy(() => import('./pages/admin/Audit'));
 const AdminReports = lazy(() => import('./pages/admin/Reports'));
 const AdminRepayments = lazy(() => import('./pages/admin/Repayments'));
+const AdminBookDetail = lazy(() => import('./pages/admin/BookDetail'));
 const AdminSupport = lazy(() => import('./pages/admin/Support'));
 const AdminGroups = lazy(() => import('./pages/admin/Groups'));
 const AdminGroup = lazy(() => import('./pages/admin/GroupDetail'));
@@ -117,6 +119,7 @@ export default function App() {
           }
         >
           <Route index element={<Dashboard />} />
+          {/* Savings and Ajo circles are switched off for now; old links land on the dashboard.
           <Route path="savings" element={<Savings />} />
           <Route path="savings/new" element={<NewPlan />} />
           <Route path="savings/fixed" element={<FixedPlan />} />
@@ -126,6 +129,9 @@ export default function App() {
           <Route path="circles" element={<Circles />} />
           <Route path="circles/new" element={<NewCircle />} />
           <Route path="circles/:id" element={<CircleDetail />} />
+          */}
+          <Route path="savings/*" element={<Navigate to="/app" replace />} />
+          <Route path="circles/*" element={<Navigate to="/app" replace />} />
           <Route path="loans" element={<Loans />} />
           <Route path="loans/calculator" element={<LoanCalculator />} />
           <Route path="loans/apply" element={<LoanApply />} />
@@ -171,6 +177,8 @@ export default function App() {
             <Route path="audit" element={<AdminAudit />} />
             <Route path="reports" element={<AdminReports />} />
             <Route path="repayments" element={<AdminRepayments />} />
+            <Route path="book" element={<Navigate to="/admin/book/overdue" replace />} />
+            <Route path="book/:view" element={<AdminBookDetail />} />
             <Route path="groups" element={<AdminGroups />} />
             <Route path="groups/:id" element={<AdminGroup />} />
             <Route path="support" element={<AdminSupport />} />

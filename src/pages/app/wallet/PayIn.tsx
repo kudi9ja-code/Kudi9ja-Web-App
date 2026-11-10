@@ -85,7 +85,7 @@ export default function PayIn() {
               onChange={setPurpose}
               columns={2}
               options={[
-                { value: 'WALLET', label: 'Fund my wallet', sub: 'Save, join a circle, or keep it' },
+                { value: 'WALLET', label: 'Fund my wallet', sub: 'Repay from it, or keep it' },
                 { value: 'LOAN_REPAYMENT', label: 'Repay a loan', sub: 'Applied to the loan at once' },
               ]}
             />

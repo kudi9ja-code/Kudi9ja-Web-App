@@ -1,6 +1,6 @@
-import { BriefcaseBusiness, PiggyBank, ShieldCheck, UserRound, Wallet } from 'lucide-react';
+import { BriefcaseBusiness, /* PiggyBank, */ ShieldCheck, UserRound, Wallet } from 'lucide-react';
 import { cn } from '../lib/cn';
-import { nairaShort, ratePct } from '../lib/format';
+import { nairaShort /* , ratePct */ } from '../lib/format';
 import { useSettings } from '../state/settings';
 
 /** The headline and the five promises, shared by the home page hero and the sign-in panel. */
@@ -18,7 +18,8 @@ export function PromiseList({ className }: { className?: string }) {
     { icon: BriefcaseBusiness, title: 'Employer-Guaranteed Employee Loans', text: 'Your employer guarantees the loan, so you can get money for what you need before your salary comes in.' },
     { icon: UserRound, title: `Personal loans up to ${nairaShort(s.lending.maxAmount)}`, text: 'Borrow in your own name, at a flat rate set by the tenure you choose, and repay monthly or weekly.' },
     { icon: Wallet, title: 'Straight to your wallet', text: 'Approved loans land in your Kudi9ja wallet, with a repayment plan you can read at a glance.' },
-    { icon: PiggyBank, title: `${ratePct(s.savings.annualRate * 100)} a year, paid upfront`, text: 'Lock any amount and your full return lands in your wallet the moment the plan starts.' },
+    // Savings is switched off for now.
+    // { icon: PiggyBank, title: `${ratePct(s.savings.annualRate * 100)} a year, paid upfront`, text: 'Lock any amount and your full return lands in your wallet the moment the plan starts.' },
     { icon: ShieldCheck, title: 'Two keys on every naira', text: 'A sign-in passcode to get in, and a separate transaction PIN for everything that moves money.' },
   ];
 

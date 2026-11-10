@@ -53,7 +53,7 @@ export default function Privacy() {
             <DetailRows
               rows={[
                 ['In your wallet', naira(c.walletBalance)],
-                ['Locked in savings', naira(c.lockedInSavings)],
+                // ['Locked in savings', naira(c.lockedInSavings)], // savings is switched off for now
                 ['Owed on loans', naira(c.outstandingOnLoans)],
               ]}
             />

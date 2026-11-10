@@ -37,7 +37,7 @@ export default function Insights() {
       <div className="mx-auto max-w-4xl">
         <PageHeader title="Insights" />
         <Card>
-          <EmptyState icon={<LineIcon />} title="Nothing to analyse yet" message="Once you start saving and spending, your patterns show up here." />
+          <EmptyState icon={<LineIcon />} title="Nothing to analyse yet" message="Once money moves through your wallet, your patterns show up here." />
         </Card>
       </div>
     );
@@ -45,8 +45,9 @@ export default function Insights() {
 
   const holdings = [
     { name: 'In your wallet', value: d?.balance ?? 0 },
-    { name: 'Locked in savings', value: d?.totalSaved ?? 0 },
-    { name: 'In Ajo circles', value: d?.thriftCommitted ?? 0 },
+    // Savings and Ajo circles are switched off for now.
+    // { name: 'Locked in savings', value: d?.totalSaved ?? 0 },
+    // { name: 'In Ajo circles', value: d?.thriftCommitted ?? 0 },
   ].filter((h) => h.value > 0);
 
   return (
@@ -54,8 +55,10 @@ export default function Insights() {
       <PageHeader title="Insights" subtitle="The last six months, from your own history." />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile label="Net worth" value={naira(d?.netWorth ?? 0)} footnote="Wallet + savings − loans" />
+        <StatTile label="Net worth" value={naira(d?.netWorth ?? 0)} footnote="Wallet − loans" />
+        {/* Interest received came from savings, which is switched off for now.
         <StatTile label="Interest received" value={naira(data.interest)} tone="success" footnote="All time" />
+        */}
         <StatTile label="Fees paid" value={naira(data.fees)} tone="danger" footnote="All time" />
         <StatTile label="Owed on loans" value={naira(d?.totalOwed ?? 0)} tone={d?.totalOwed ? 'danger' : 'neutral'} />
       </div>
